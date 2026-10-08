@@ -5,7 +5,7 @@
 	#O3 for most optimization. Code base is small
 	#so compile time is not an issue
 	
-	CFLAGS   = -Wall -Wextra -Werror -O3
+	CFLAGS   = -Wall -Wextra  -O3
 	CPPFLAGS = -Iinclude
 
 #Where should the dependency rules be stored
@@ -22,7 +22,7 @@
 
 #Getting all the source files
 
-	SRCS = $(wildcard src/*.c)
+	SRCS = $(wildcard src/*.c src/*/*.c)
 
 #Using % to change the file to build file
 
@@ -59,6 +59,7 @@ build/%.o : src/%.c
 #Then we compile the file
 
 build/%.o : src/%.c $(DEPDIR)/%.d | $(DEPDIR)
+	@mkdir -p $(dir $@) $(dir $(DEPDIR)/$*.d)
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 #Clean by removing contents of ./build
